@@ -51,7 +51,8 @@ const updateUser = catchError(async(req , res , next)=>{
 })
 
 const deleteUser = catchError(async(req , res , next)=>{
-    const result = await userModel.findByIdAndDelete(req.user._id)
+    const {id} = req.params
+    const result = await userModel.findByIdAndDelete(id)
     !result && next(new customError('User not found' , 404))
     result && res.status(201).json({message:'User Deleted' , result})
 })

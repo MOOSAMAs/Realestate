@@ -7,7 +7,6 @@ import { verifyEmail } from '../../mails/mail.verify.js';
 
 const signUp = catchError(async(req , res , next)=>{
     const{email} = req.body
-    req.body.profilePic = req.file.profilePic[0].filename
     const userExist = await userModel.findOne({email})
     if(userExist) return next(new customError('This email alreday used' , 401))
     const result = new userModel(req.body)
@@ -32,7 +31,7 @@ const protectedRoutes = catchError(async(req , res , next)=>{
     if(!token) return next(new customError('Token not valid' , 401))
     const decode = jwt.verify(token , process.env.JWT_SECRET_KEY)
     const user = await userModel.findById(decode.userId)
-    if(!user) return next(new customError('Token not valid' , 401))
+    if(!user) return next(new customError('You not authorized to this point' , 401))
     if(user.passwordChangedAt > decode.iat) return next(new customError('Token not valid' , 401))
     req.user = user
     next()

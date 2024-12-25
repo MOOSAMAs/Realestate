@@ -18,4 +18,4 @@ init(app)
 app.get('/', (req, res) => res.send('Hello World!'))
 
 dbConnection()
-app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${process.env.PORT}!`))
+app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))

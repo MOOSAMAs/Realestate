@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    birthDate: Date,
+    address:String,
+    aboutMe:{
+        type:String,
+        maxLength:100
+    },
     confirmedEmail:{
         type:Boolean,
         default:false
@@ -35,9 +41,9 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['user' , 'saller' , 'admin'],
+        enum:['user' , 'admin'],
         default:'user'
-    }
+    },
 })
 
 userSchema.pre('save' , function(){

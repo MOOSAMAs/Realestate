@@ -8,13 +8,13 @@ import { userValidationSchema } from './user.schema.validate.js'
 const userRouter = express.Router()
 
 userRouter.route('/')
-.post(protectedRoutes ,allowedTo('admin'), validation(userValidationSchema) , user.addUser)
-.get(protectedRoutes ,allowedTo('admin') , user.getAllUsers)
+.post(protectedRoutes , allowedTo('admin') , validation(userValidationSchema) , user.addUser)
+.get(protectedRoutes , allowedTo('admin') , user.getAllUsers)
 
 userRouter.route('/:id')
-.get(protectedRoutes ,allowedTo('admin') ,user.getOneUser)
-.put(protectedRoutes ,allowedTo('admin' , 'user') ,user.updateUser)
-.delete(protectedRoutes ,allowedTo('admin') ,user.deleteUser)
+.get(protectedRoutes , allowedTo('admin') , user.getOneUser)
+.put(protectedRoutes , allowedTo('admin' , 'user') , user.updateUser)
+.delete(protectedRoutes ,allowedTo('admin') , user.deleteUser)
 
 userRouter.route('/mail/:token')
 .get(user.verifyMail)
