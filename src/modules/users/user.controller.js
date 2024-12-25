@@ -44,7 +44,6 @@ const userProfile = catchError(async(req , res , next)=>{
 })
 
 const updateUser = catchError(async(req , res , next)=>{
-    req.body.passwordChangedAt = Date.now()
     const result = await userModel.findByIdAndUpdate(req.user._id , req.body , {new:true})
     !result && next(new customError('User not found' , 404))
     result && res.status(201).json({message:'User Updated' , result})
