@@ -1,8 +1,8 @@
 FROM node:22
 
-WORKDIR /Fitness
+WORKDIR /Realestate
 
-COPY . /Fitness//
+COPY . /Realestate/
 
 RUN npm install
 
