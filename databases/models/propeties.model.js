@@ -14,7 +14,7 @@ const propertiesSchema = new mongoose.Schema({
     type:{
         type:String,
         required:true,
-        enum:['house' , 'apartment']
+        enum:[' house' , 'apartment' , 'villa' ]
     },
     area:{
         type:Number,

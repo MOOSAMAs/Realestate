@@ -20,7 +20,7 @@ const login = catchError(async(req , res , next)=>{
     const emailExist = await userModel.findOne({email})
     const passMatch = await bcrypt.compare(password , emailExist.password)
     if(emailExist && passMatch){
-        const token = jwt.sign({email:emailExist.email , name:emailExist.name , userId:emailExist._id , role:emailExist.role} , process.env.JWT_SECRET_KEY)
+        const token = jwt.sign({email:emailExist.email , name:emailExist.name , userId:emailExist._id , role:emailExist.role} , process.env.JWT_SECRET_KEY , {expiresIn:'30d'})
         res.status(201).json({message:'Welcome To Realestate' , token})
     }
     return next(new customError('Email or password not correct' , 404))
@@ -32,7 +32,10 @@ const protectedRoutes = catchError(async(req , res , next)=>{
     const decode = jwt.verify(token , process.env.JWT_SECRET_KEY)
     const user = await userModel.findById(decode.userId)
     if(!user) return next(new customError('You not authorized to this point' , 401))
-    if(user.passwordChangedAt > decode.iat) return next(new customError('Token not valid' , 401))
+    if(user.changedPasswrodAt){
+        const passwordChangedAt = parseInt(user.passwordChangedAt.getTime() / 1000 )
+        if(passwordChangedAt > decode.iat) return next(new customError('Token not valid' , 401))
+    }
     req.user = user
     next()
 })
