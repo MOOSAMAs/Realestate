@@ -4,6 +4,6 @@ WORKDIR /Realestate
 
 COPY . /Realestate/
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 CMD [ "npm" , "start" ]
