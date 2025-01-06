@@ -3,6 +3,7 @@ import { userModel } from "../../../databases/models/user.model.js"
 import { catchError } from "../../middleware/handleError.js"
 import { customError } from "../../utils/customError.js"
 import { verifyEmail } from "../../mails/mail.verify.js"
+import { uploadImageToCloudinary } from "../../utils/upload.img.cloud.js"
 
 
 const addUser = catchError(async(req , res , next)=>{
@@ -38,6 +39,10 @@ const verifyMail = catchError(async(req , res , next)=>{
 
 const userProfile = catchError(async(req , res , next)=>{
     req.body.profilePic = req.file.filename
+    if (req.file) {
+        const imageUrl = await uploadImageToCloudinary(req.file.path);
+        req.body.profilePic = imageUrl;
+      }
     const addProfilePic = await userModel.findByIdAndUpdate(req.user._id , req.body , {new:true})
     !addProfilePic && next(new customError('User Not Found' , 404))
     addProfilePic && res.status(201).json({message:'Profile Updated Successfully}' , addProfilePic})

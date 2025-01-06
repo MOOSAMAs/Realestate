@@ -44,6 +44,10 @@ const userSchema = new mongoose.Schema({
         enum:['user' , 'admin'],
         default:'user'
     },
+    wishlist:[{
+        type:mongoose.Types.ObjectId,
+        ref:'properties'
+    }],
 })
 
 userSchema.pre('save' , function(){
@@ -54,8 +58,8 @@ userSchema.pre('findOneAndUpdate' , function(){
     if(this._update.password) this._update.password = bcrypt.hashSync(this._update.password , 10)
 })
 
-userSchema.post('init' , function (doc){
-    doc.profilePic = process.env.BASE_URL + "/profileImages/" + doc.profilePic
-})
+// userSchema.post('init' , function (doc){
+//     doc.profilePic = process.env.BASE_URL + "/profileImages/" + doc.profilePic
+// })
 
 export const userModel = mongoose.model('user' , userSchema)

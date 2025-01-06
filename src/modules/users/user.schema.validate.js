@@ -5,5 +5,6 @@ export const userValidationSchema = Joi.object({
     email:Joi.string().email().trim().required(),
     password:Joi.string().min(8).max(30).pattern(/^[A-Z][a-z0-9]{3,30}$/).required(),
     repassword:Joi.ref('password'),
+    gender:Joi.string(),
     phoneNum:Joi.number()
 })

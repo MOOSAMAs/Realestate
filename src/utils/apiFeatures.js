@@ -39,13 +39,25 @@ export class apiFeature {
             this.mongooseQuery.find({
                 $or:[
                     {
-                        place:{
+                        location:{
                             $regex:this.queryString.keyword,
                             $options: 'i'
                         }
                     },
                     {
                         discription:{
+                            $regex:this.queryString.keyword,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        area:{
+                            $regex:this.queryString.keyword,
+                            $options: 'i'
+                        }
+                    },
+                    {
+                        type:{
                             $regex:this.queryString.keyword,
                             $options: 'i'
                         }
